@@ -3,7 +3,12 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial']
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vetramoncruz.cl'),
@@ -140,6 +145,11 @@ export default function RootLayout({
         <link rel="preload" href="/hero.webp" as="image" type="image/webp" />
         <link rel="preload" href="/images/mobile/hero-mobile.webp" as="image" type="image/webp" media="(max-width: 768px)" />
         <link rel="preload" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Color%20correcto-NqQ4jg7FdykLqDWon6sKXJkh2Mzg8a.png" as="image" type="image/png" />
+        
+
+        
+        {/* Preload de CSS crítico */}
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
         
         {/* DNS prefetch para recursos externos */}
         <link rel="dns-prefetch" href="//www.google.com" />

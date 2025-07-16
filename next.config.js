@@ -32,6 +32,8 @@ const nextConfig = {
         },
       },
     },
+    // Optimización de CSS crítico
+    optimizeServerReact: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

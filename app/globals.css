@@ -4,7 +4,7 @@
 
 /* Optimizaciones para rendimiento */
 @layer base {
-  /* Preload de fuentes críticas */
+  /* Optimización de fuentes */
   @font-face {
     font-family: 'Inter';
     font-display: swap;
