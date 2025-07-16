@@ -338,7 +338,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-dvh flex-col">
       <Header handleNavClick={handleNavClick} />
       <main className="flex-1">
         <HeroSection />

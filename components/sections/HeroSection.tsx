@@ -15,7 +15,7 @@ export const HeroSection = () => {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section className="relative min-h-dvh flex items-center">
       <div className="absolute inset-0 z-0">
         {/* Imagen para Desktop */}
         <div className="hidden md:block absolute inset-0">
