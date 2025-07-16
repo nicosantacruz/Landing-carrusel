@@ -146,10 +146,14 @@ export default function RootLayout({
         <link rel="preload" href="/images/mobile/hero-mobile.webp" as="image" type="image/webp" media="(max-width: 768px)" />
         <link rel="preload" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Color%20correcto-NqQ4jg7FdykLqDWon6sKXJkh2Mzg8a.png" as="image" type="image/png" />
         
+        {/* DNS prefetch para recursos externos */}
+        <link rel="dns-prefetch" href="//www.google.com" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="//hebbkx1anhila5yf.public.blob.vercel-storage.com" />
+        
 
         
-        {/* Preload de CSS crítico */}
-        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+
         
         {/* DNS prefetch para recursos externos */}
         <link rel="dns-prefetch" href="//www.google.com" />
