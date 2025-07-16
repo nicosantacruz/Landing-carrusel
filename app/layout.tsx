@@ -150,15 +150,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.google.com" />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//hebbkx1anhila5yf.public.blob.vercel-storage.com" />
-        
-
-        
-
-        
-        {/* DNS prefetch para recursos externos */}
-        <link rel="dns-prefetch" href="//www.google.com" />
-        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="//hebbkx1anhila5yf.public.blob.vercel-storage.com" />
 
         {/* Schema.org para Google - Mejorado para SEO local */}
         <script
