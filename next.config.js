@@ -21,6 +21,8 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 días
   },
+  // Configuración para reducir polyfills innecesarios
+  swcMinify: true,
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
@@ -34,6 +36,8 @@ const nextConfig = {
     },
     // Optimización de CSS crítico
     optimizeServerReact: true,
+    // Optimizaciones adicionales para reducir bundle size
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -45,6 +49,19 @@ const nextConfig = {
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,
     pagesBufferLength: 2,
+  },
+  // Configuración de webpack para optimizar polyfills
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      // Optimizar para navegadores modernos
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
   },
 }
 
