@@ -93,7 +93,7 @@ const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
           <MenuIcon />
         </button>
         {/* Navegación y redes sociales solo en desktop */}
-        <nav className="hidden md:flex gap-6 lg:gap-10">
+        <nav className="hidden md:flex gap-4 lg:gap-6">
           <a
             href="#"
             className="text-lg md:text-xl font-bold tracking-tight text-blue-900 transition-colors transform transition-transform duration-200 hover:text-blue-700 hover:scale-110"
@@ -122,20 +122,47 @@ const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
           >
             Contacto
           </a>
+          <a
+            href="#tienda"
+            className="flex items-center gap-2 text-lg md:text-xl font-bold tracking-tight text-blue-900 transition-colors transform transition-transform duration-200 hover:text-blue-700 hover:scale-110"
+            onClick={e => handleNavClick(e, "tienda")}
+          >
+            <svg width="20" height="20" viewBox="0 0 16.933333 16.933333" className="inline-block">
+              <path d="m8.4736018-.00025806c-1.5221789 0-2.775041 1.16645006-2.8943969 2.64635006h-.922424c-.838429 0-1.454231.6507901-1.581815 1.53324l-1.611272 11.144539c-.126743.87664.690124 1.60972 1.583883 1.60972h10.8396481c.900627 0 1.708892-.73324 1.582333-1.60972l-1.609205-11.144539c-.122944-.85145-.719335-1.53324-1.582332-1.53324h-.910538c-.119359-1.47989-1.3717072-2.64635006-2.8938812-2.64635006zm0 .52916999c1.238745 0 2.2499012.92724007 2.3667812 2.11718007h-4.7320112c.1166741-1.18994 1.126482-2.11719007 2.36523-2.11718007zm-3.8168209 2.64686007h7.6212401c.632972 0 .981539.54245 1.05885 1.0779699l1.609204 11.1466091c.07998.55403-.49176 1.00356-1.05885 1.00356h-10.8396481c-.565399 0-1.138736-.44663-1.0583329-1.00356l1.6092039-11.1466091c.08483-.5876298.461221-1.0779699 1.058333-1.0779699zm6.1954881 2.1151198c.000001 1.2986102-1.0609293 2.3497302-2.3786672 2.3497302-1.3177409 0-2.3771169-1.05111-2.3771159-2.3497302 0-.3519498-.5291661-.3538497-.5291661 0-.0000011 1.5877701 1.305688 2.8789 2.906282 2.8788902 1.6005902 0 2.9062852-1.2911301 2.9062832-2.8788902 0-.3519498-.527616-.3519498-.527616 0z" 
+                    fill="currentColor" stroke="currentColor" strokeWidth="0.8"/>
+            </svg>
+            Tienda Online
+          </a>
         </nav>
-        <div className="hidden md:flex items-center gap-3 ml-6">
-          <a href="https://www.instagram.com/vet.ramoncruz/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-            className="transition-transform duration-200 hover:scale-125">
-            <Image src="/instagram.svg" alt="Instagram" width={34} height={34} className="block" priority={false} />
-          </a>
-          <a href="https://x.com/vetramoncruz" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
-            className="transition-transform duration-200 hover:scale-125">
-            <Image src="/x.svg" alt="X (Twitter)" width={34} height={34} className="block" priority={false} />
-          </a>
-          <a href="https://www.facebook.com/vetramoncruz/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-            className="transition-transform duration-200 hover:scale-125">
-            <Image src="/facebook.svg" alt="Facebook" width={34} height={34} className="block" priority={false} />
-          </a>
+        <div className="hidden md:flex items-center gap-4 ml-6">
+          <div className="flex items-center gap-3">
+            <a href="https://www.instagram.com/vet.ramoncruz/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              className="transition-transform duration-200 hover:scale-125">
+              <Image src="/instagram.svg" alt="Instagram" width={34} height={34} className="block" priority={false} />
+            </a>
+            <a href="https://x.com/vetramoncruz" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"
+              className="transition-transform duration-200 hover:scale-125">
+              <Image src="/x.svg" alt="X (Twitter)" width={34} height={34} className="block" priority={false} />
+            </a>
+            <a href="https://www.facebook.com/vetramoncruz/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+              className="transition-transform duration-200 hover:scale-125">
+              <Image src="/facebook.svg" alt="Facebook" width={34} height={34} className="block" priority={false} />
+            </a>
+          </div>
+          <Button
+            asChild
+            className="group rounded-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 h-auto text-sm font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg border-0"
+          >
+            <a href={`https://wa.me/${CONTACT_INFO.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent("Hola, me gustaría agendar una cita para mi mascota.")}`} target="_blank" rel="noopener noreferrer">
+              <svg width="15" height="15" viewBox="0 0 512 512" className="mr-1.5">
+                <path d="m493.651 263.543c-4.791 16.913-14.372 31.571-26.958 41.26-10.051 7.749-21.464 11.802-32.689 11.802-4.227 0-8.36-.564-12.446-1.719-14.841-4.246-26.865-16.034-32.97-32.351-5.589-14.874-5.965-32.374-1.174-49.292 4.837-16.913 14.418-31.571 26.958-41.26 13.809-10.642 30.247-14.32 45.135-10.083 14.842 4.246 26.912 16.034 33.018 32.351 5.541 14.875 5.963 32.374 1.126 49.292zm-314.019-42.749c17.66 0 34.521-9.83 46.262-26.982 10.661-15.551 16.532-35.92 16.532-57.365 0-21.464-5.871-41.833-16.532-57.384-11.742-17.147-28.603-26.978-46.262-26.978-17.707 0-34.567 9.83-46.309 26.978-10.614 15.551-16.485 35.92-16.485 57.384 0 21.445 5.871 41.814 16.485 57.365 11.742 17.152 28.603 26.982 46.309 26.982zm152.736 0c17.707 0 34.567-9.83 46.309-26.982 10.614-15.551 16.485-35.92 16.485-57.365 0-21.464-5.871-41.833-16.485-57.384-11.742-17.147-28.603-26.978-46.309-26.978-17.66 0-34.521 9.83-46.262 26.978-10.661 15.551-16.532 35.92-16.532 57.384 0 21.445 5.871 41.814 16.532 57.365 11.741 17.152 28.602 26.982 46.262 26.982zm-207.781 12.46c-4.837-16.922-14.418-31.58-26.959-41.27-13.808-10.642-30.246-14.32-45.135-10.083-14.888 4.246-26.912 16.034-33.018 32.351-5.542 14.874-5.964 32.374-1.127 49.292 4.791 16.913 14.372 31.571 26.958 41.26 10.051 7.749 21.464 11.802 32.689 11.802 4.18 0 8.36-.564 12.399-1.719 14.888-4.246 26.912-16.034 33.017-32.351 5.591-14.874 5.967-32.374 1.176-49.282zm223.561 41.242c-25.738-27.053-58.427-41.941-92.148-41.941-33.722 0-66.458 14.888-92.102 41.941-24.517 25.799-41.612 61.597-48.188 100.818-4.18 25.019 3.428 49.099 20.947 66.059 18.223 17.65 42.035 23.009 65.331 14.724 17.237-6.153 35.413-9.271 54.012-9.271s36.775 3.119 54.012 9.271c7.186 2.555 14.419 3.818 21.511 3.818 15.921 0 31.186-6.331 43.772-18.542 17.566-16.959 25.174-41.039 20.994-66.059-6.575-39.222-23.671-75.02-48.141-100.818z" fill="currentColor"/>
+              </svg>
+              Reserva tu hora
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="ml-1.5 transition-transform duration-300 group-hover:translate-x-1">
+                <path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4v3z" fill="currentColor"/>
+              </svg>
+            </a>
+          </Button>
         </div>
       </div>
       {/* Menú lateral hamburguesa */}
@@ -165,6 +192,13 @@ const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
               </Link>
               <Link href="#contact" className="text-lg font-bold text-blue-900 hover:text-blue-700 hover:underline transition-colors duration-150 w-full text-center" onClick={() => setMenuOpen(false)}>
                 Contacto
+              </Link>
+              <Link href="#tienda" className="flex items-center justify-center gap-2 text-lg font-bold text-blue-900 hover:text-blue-700 hover:underline transition-colors duration-150 w-full text-center" onClick={() => setMenuOpen(false)}>
+                <svg width="20" height="20" viewBox="0 0 16.933333 16.933333" className="inline-block">
+                  <path d="m8.4736018-.00025806c-1.5221789 0-2.775041 1.16645006-2.8943969 2.64635006h-.922424c-.838429 0-1.454231.6507901-1.581815 1.53324l-1.611272 11.144539c-.126743.87664.690124 1.60972 1.583883 1.60972h10.8396481c.900627 0 1.708892-.73324 1.582333-1.60972l-1.609205-11.144539c-.122944-.85145-.719335-1.53324-1.582332-1.53324h-.910538c-.119359-1.47989-1.3717072-2.64635006-2.8938812-2.64635006zm0 .52916999c1.238745 0 2.2499012.92724007 2.3667812 2.11718007h-4.7320112c.1166741-1.18994 1.126482-2.11719007 2.36523-2.11718007zm-3.8168209 2.64686007h7.6212401c.632972 0 .981539.54245 1.05885 1.0779699l1.609204 11.1466091c.07998.55403-.49176 1.00356-1.05885 1.00356h-10.8396481c-.565399 0-1.138736-.44663-1.0583329-1.00356l1.6092039-11.1466091c.08483-.5876298.461221-1.0779699 1.058333-1.0779699zm6.1954881 2.1151198c.000001 1.2986102-1.0609293 2.3497302-2.3786672 2.3497302-1.3177409 0-2.3771169-1.05111-2.3771159-2.3497302 0-.3519498-.5291661-.3538497-.5291661 0-.0000011 1.5877701 1.305688 2.8789 2.906282 2.8788902 1.6005902 0 2.9062852-1.2911301 2.9062832-2.8788902 0-.3519498-.527616-.3519498-.527616 0z" 
+                        fill="currentColor" stroke="currentColor" strokeWidth="0.8"/>
+                </svg>
+                Tienda Online
               </Link>
             </nav>
             {/* Divider visual */}
@@ -234,7 +268,7 @@ const Footer = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
                   <a href="#contact" className="text-blue-200 hover:text-white transition-colors" onClick={e => handleNavClick(e, "contact")}>Contacto</a>
                 </li>
                 <li>
-                  <a href="#contact" className="text-blue-200 hover:text-white transition-colors" onClick={e => handleNavClick(e, "contact")}>Horarios</a>
+                  <a href="#tienda" className="text-blue-200 hover:text-white transition-colors" onClick={e => handleNavClick(e, "tienda")}>Tienda Online</a>
                 </li>
               </ul>
             </div>
