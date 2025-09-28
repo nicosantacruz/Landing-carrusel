@@ -1,0 +1,24 @@
+@keyframes carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-carousel {
+  /* VELOCIDAD EXACTA DEL ORIGINAL: 30 segundos */
+  animation: carousel 30s linear infinite;
+}
+
+.animate-carousel:hover {
+  animation-play-state: paused;
+}
+
+/* Soporte para @container queries (importante para los labels) */
+@container (min-width: 275px) {
+  .hidden\@\[275px\]\/label\:inline {
+    display: inline;
+  }
+}
