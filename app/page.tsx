@@ -41,24 +41,23 @@ const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  // Debounce function para optimizar el scroll
-  const debounce = useCallback((func: Function, wait: number) => {
-    let timeout: NodeJS.Timeout;
-    return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(null, args), wait);
-    };
-  }, []);
-
   useEffect(() => {
-    const handleScroll = debounce((): void => {
-      const offset = window.scrollY
-      setScrolled(offset > 50)
-    }, 10); // 10ms debounce
+    let ticking = false;
+    
+    const handleScroll = (): void => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const offset = window.scrollY
+          setScrolled(offset > 50)
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [debounce])
+  }, [])
 
   // Función para scroll con offset
   const scrollToContactWithOffset = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -380,33 +379,36 @@ export default function Home() {
         
         {/* Sección de Productos Destacados */}
         <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white via-slate-50/30 to-white">
-          <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+          <div className="container relative mb-6 md:mb-10">
+            {/* Título centrado con el mismo estilo de Servicios */}
+            <div className="mx-auto max-w-3xl text-center mb-8 md:mb-12">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
                 <span className="bg-gradient-to-r from-blue-700 to-blue-900 bg-clip-text text-transparent">
                   Productos Destacados
                 </span>
               </h2>
-              <a 
-                href="https://vetramoncruz.vercel.app/products" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-blue-700 hover:text-blue-900 font-medium group transition-colors duration-200"
-              >
-                Ver todos los productos
-                <svg 
-                  className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
             </div>
+
+            {/* Enlace alineado a la derecha del contenedor */}
+            <a 
+              href="https://vetramoncruz.vercel.app/products" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute right-0 top-1/2 -translate-y-1/2 transform flex items-center gap-2 text-blue-700 hover:text-blue-900 font-medium group transition-colors duration-200"
+            >
+              Ver todos los productos
+              <svg 
+                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
           {/* Carrusel sin márgenes - usa todo el ancho */}
-          <Carousel shopUrl="https://vetramoncruz.vercel.app" />
+          <Carousel />
         </section>
         
         <ServicesSection />

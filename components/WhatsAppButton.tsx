@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Link from "next/link"
 import type { WhatsAppButtonProps } from "@/lib/types"
 
@@ -19,9 +19,12 @@ export const WhatsAppFloatingButton = ({
     return () => clearTimeout(timer)
   }, [delay])
 
-  const formattedPhone = phoneNumber.replace(/\D/g, "")
-  const encodedMessage = encodeURIComponent(message)
-  const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`
+  // Memoizar la URL de WhatsApp para evitar recálculos
+  const whatsappUrl = useMemo(() => {
+    const formattedPhone = phoneNumber.replace(/\D/g, "")
+    const encodedMessage = encodeURIComponent(message)
+    return `https://wa.me/${formattedPhone}?text=${encodedMessage}`
+  }, [phoneNumber, message])
 
   return (
     <div
@@ -35,6 +38,7 @@ export const WhatsAppFloatingButton = ({
         rel="noopener noreferrer"
         className="flex h-20 w-20 items-center justify-center rounded-full bg-[#25D366] border-2 border-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
         aria-label="Contáctanos por WhatsApp"
+        prefetch={false}
       >
         <svg
           width="42"
@@ -43,6 +47,7 @@ export const WhatsAppFloatingButton = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="text-white"
+          aria-hidden="true"
         >
           <path
             d="M0,512l35.31-128C12.359,344.276,0,300.138,0,254.234C0,114.759,114.759,0,255.117,0 S512,114.759,512,254.234S395.476,512,255.117,512c-44.138,0-86.51-14.124-124.469-35.31L0,512z"

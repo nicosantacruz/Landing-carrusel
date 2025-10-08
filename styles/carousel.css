@@ -8,7 +8,6 @@
 }
 
 .animate-carousel {
-  /* VELOCIDAD EXACTA DEL ORIGINAL: 30 segundos */
   animation: carousel 30s linear infinite;
 }
 

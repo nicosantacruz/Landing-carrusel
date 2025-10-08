@@ -1,30 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { GridTileImage } from './GridTileImage';
 import { Product } from '@/lib/shopify/types';
 
-interface CarouselProps {
-  shopUrl?: string;
-  collectionHandle?: string;
-}
-
-export function Carousel({ 
-  shopUrl = "https://tu-tienda.vercel.app",
-  collectionHandle = "hidden-homepage-carousel"
-}: CarouselProps) {
+export function Carousel() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+    
     async function fetchProducts() {
       try {
         setLoading(true);
-        setError(null);
-        
-        const response = await fetch(`/api/shopify/products?collection=${collectionHandle}`);
+        const response = await fetch('/api/shopify/products?collection=hidden-homepage-carousel', {
+          next: { revalidate: 3600 } // Cache for 1 hour
+        });
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,17 +29,30 @@ export function Carousel({
           throw new Error(data.error);
         }
         
-        setProducts(data.products || []);
+        if (isMounted) {
+          setProducts(data.products || []);
+        }
       } catch (error) {
         console.error('Error fetching products:', error);
-        setError(error instanceof Error ? error.message : 'Error desconocido');
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
     fetchProducts();
-  }, [collectionHandle]);
+    
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Memoizar la triplicación de productos para evitar recálculos
+  const carouselProducts = useMemo(() => {
+    if (!products.length) return [];
+    return [...products, ...products, ...products];
+  }, [products]);
 
   if (loading) {
     return (
@@ -63,18 +69,7 @@ export function Carousel({
     );
   }
 
-  if (error) {
-    return (
-      <div className="w-full p-8 text-center">
-        <p className="text-red-600">Error al cargar productos: {error}</p>
-      </div>
-    );
-  }
-
-  if (!products.length) return null;
-
-  // IMPORTANTE: Triplicar productos para el loop infinito (igual que el original)
-  const carouselProducts = [...products, ...products, ...products];
+  if (!products?.length) return null;
 
   return (
     <div className="w-full overflow-x-auto pb-6 pt-1">
@@ -82,14 +77,9 @@ export function Carousel({
         {carouselProducts.map((product, i) => (
           <li
             key={`${product.handle}${i}`}
-            // TAMAÑOS EXACTOS DEL ORIGINAL:
             className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
           >
-            <Link 
-              href={`${shopUrl}/product/${product.handle}`} 
-              className="relative h-full w-full"
-              target="_blank"
-            >
+            <Link href={`/product/${product.handle}`} className="relative h-full w-full">
               <GridTileImage
                 alt={product.title}
                 label={{
@@ -99,8 +89,10 @@ export function Carousel({
                 }}
                 src={product.featuredImage?.url}
                 fill
-                // SIZES EXACTOS DEL ORIGINAL:
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                loading="lazy"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
               />
             </Link>
           </li>
