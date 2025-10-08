@@ -134,7 +134,7 @@ const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
             Tienda Online
           </a>
         </nav>
-        <div className="hidden md:flex items-center gap-4 ml-6">
+        <div className="hidden md:flex items-center gap-4 ml-6 header-social-icons">
           <div className="flex items-center gap-3">
             <a href="https://www.instagram.com/vet.ramoncruz/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
               className="transition-transform duration-200 hover:scale-125">
@@ -149,20 +149,6 @@ const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
               <Image src="/facebook.svg" alt="Facebook" width={34} height={34} className="block" priority={false} />
             </a>
           </div>
-          <Button
-            asChild
-            className="group rounded-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 h-auto text-sm font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg border-0"
-          >
-            <a href={`https://wa.me/${CONTACT_INFO.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent("Hola, me gustaría agendar una cita para mi mascota.")}`} target="_blank" rel="noopener noreferrer">
-              <svg width="15" height="15" viewBox="0 0 512 512" className="mr-1.5">
-                <path d="m493.651 263.543c-4.791 16.913-14.372 31.571-26.958 41.26-10.051 7.749-21.464 11.802-32.689 11.802-4.227 0-8.36-.564-12.446-1.719-14.841-4.246-26.865-16.034-32.97-32.351-5.589-14.874-5.965-32.374-1.174-49.292 4.837-16.913 14.418-31.571 26.958-41.26 13.809-10.642 30.247-14.32 45.135-10.083 14.842 4.246 26.912 16.034 33.018 32.351 5.541 14.875 5.963 32.374 1.126 49.292zm-314.019-42.749c17.66 0 34.521-9.83 46.262-26.982 10.661-15.551 16.532-35.92 16.532-57.365 0-21.464-5.871-41.833-16.532-57.384-11.742-17.147-28.603-26.978-46.262-26.978-17.707 0-34.567 9.83-46.309 26.978-10.614 15.551-16.485 35.92-16.485 57.384 0 21.445 5.871 41.814 16.485 57.365 11.742 17.152 28.603 26.982 46.309 26.982zm152.736 0c17.707 0 34.567-9.83 46.309-26.982 10.614-15.551 16.485-35.92 16.485-57.365 0-21.464-5.871-41.833-16.485-57.384-11.742-17.147-28.603-26.978-46.309-26.978-17.66 0-34.521 9.83-46.262 26.978-10.661 15.551-16.532 35.92-16.532 57.384 0 21.445 5.871 41.814 16.532 57.365 11.741 17.152 28.602 26.982 46.262 26.982zm-207.781 12.46c-4.837-16.922-14.418-31.58-26.959-41.27-13.808-10.642-30.246-14.32-45.135-10.083-14.888 4.246-26.912 16.034-33.018 32.351-5.542 14.874-5.964 32.374-1.127 49.292 4.791 16.913 14.372 31.571 26.958 41.26 10.051 7.749 21.464 11.802 32.689 11.802 4.18 0 8.36-.564 12.399-1.719 14.888-4.246 26.912-16.034 33.017-32.351 5.591-14.874 5.967-32.374 1.176-49.282zm223.561 41.242c-25.738-27.053-58.427-41.941-92.148-41.941-33.722 0-66.458 14.888-92.102 41.941-24.517 25.799-41.612 61.597-48.188 100.818-4.18 25.019 3.428 49.099 20.947 66.059 18.223 17.65 42.035 23.009 65.331 14.724 17.237-6.153 35.413-9.271 54.012-9.271s36.775 3.119 54.012 9.271c7.186 2.555 14.419 3.818 21.511 3.818 15.921 0 31.186-6.331 43.772-18.542 17.566-16.959 25.174-41.039 20.994-66.059-6.575-39.222-23.671-75.02-48.141-100.818z" fill="currentColor"/>
-              </svg>
-              Reserva tu hora
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="ml-1.5 transition-transform duration-300 group-hover:translate-x-1">
-                <path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4v3z" fill="currentColor"/>
-              </svg>
-            </a>
-          </Button>
         </div>
       </div>
       {/* Menú lateral hamburguesa */}

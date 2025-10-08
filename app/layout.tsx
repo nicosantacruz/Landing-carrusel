@@ -312,6 +312,20 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
 
+        {/* YouCanBookMe - Sistema de reservas */}
+        <script 
+          src="https://embed.ycb.me"
+          async={true}
+          data-domain="vetramoncruz"
+          data-content="all"
+          data-type="button-floating"
+          data-innertext="Reserva tu hora"
+          data-buttonicon="calendar"
+          data-buttoncolor="#2563EB"
+          data-displaymode="light"
+          data-buttonposition="topRight"
+        />
+
         {/* Google Analytics - Descomenta cuando tengas tu ID real */}
         {/* 
         <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
