@@ -14,6 +14,7 @@ import { CONTACT_INFO, BUSINESS_HOURS } from "@/lib/types"
 import { MapPin, Phone, Mail, Heart, Clock, Shield, User, ArrowRight } from "lucide-react"
 import dynamic from "next/dynamic"
 import { MenuIcon, WhatsAppIcon } from "@/components/ui/icons"
+import emailjs from "@emailjs/browser"
 
 // Lazy loading para componentes no críticos
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection").then(mod => ({ default: mod.AboutSection })), {
@@ -325,35 +326,42 @@ export default function Home() {
     }
   };
 
-  // Nueva función para enviar el formulario a la API interna
+  // Enviar el formulario solo vía EmailJS
   const sendLead = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
     if (!formRef.current) return;
+
     const formData = new FormData(formRef.current);
     const data = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      whatsapp: formData.get('whatsapp'),
-      message: formData.get('message'),
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      whatsapp: String(formData.get("whatsapp") || ""),
+      message: String(formData.get("message") || ""),
     };
+
     try {
-      const response = await fetch('/api/lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      // Enviar correo con EmailJS
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string,
+        {
+          name: data.name,
+          email: data.email,
+          whatsapp: data.whatsapp,
+          message: data.message,
+        },
+        { publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string }
+      );
+
       setLoading(false);
-      if (response.ok) {
-        setSuccess(true);
-        formRef.current.reset();
-      } else {
-        alert('Error al enviar el mensaje. Intenta nuevamente.');
-      }
+      setSuccess(true);
+      formRef.current.reset();
     } catch (error) {
+      console.error("EmailJS error:", error);
       setLoading(false);
-      alert('Error al enviar el mensaje. Intenta nuevamente.');
+      alert("No pudimos enviar el correo en este momento. Intenta nuevamente.");
     }
   };
 
