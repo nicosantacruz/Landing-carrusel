@@ -8,8 +8,10 @@ import { Product } from '@/lib/shopify/types';
 export function Carousel() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     let isMounted = true;
     
     async function fetchProducts() {
@@ -53,6 +55,22 @@ export function Carousel() {
     if (!products.length) return [];
     return [...products, ...products, ...products];
   }, [products]);
+
+  // Evitar hidratación mostrando el carrusel solo después del mount
+  if (!isMounted) {
+    return (
+      <div className="w-full overflow-x-auto pb-6 pt-1">
+        <div className="flex gap-4">
+          {[...Array(5)].map((_, i) => (
+            <div 
+              key={i}
+              className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3 animate-pulse bg-gray-200 rounded-lg"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

@@ -326,6 +326,49 @@ export default function RootLayout({
           data-buttonposition="topRight"
         />
 
+        {/* Script para cambiar texto del botón dinámicamente según tamaño de pantalla */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                function updateButtonText() {
+                  // Verificar que estamos en el cliente
+                  if (typeof window === 'undefined') return;
+                  
+                  const button = document.querySelector('[data-ycb-button] a');
+                  if (!button) return;
+                  
+                  // Usar requestAnimationFrame para evitar problemas de hidratación
+                  requestAnimationFrame(() => {
+                    if (window.innerWidth <= 1024) {
+                      button.textContent = 'Agendar';
+                    } else {
+                      button.textContent = 'Reserva tu hora';
+                    }
+                  });
+                }
+                
+                // Solo ejecutar en el cliente
+                if (typeof window !== 'undefined') {
+                  // Ejecutar cuando el DOM esté listo
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', function() {
+                      setTimeout(updateButtonText, 1500);
+                    });
+                  } else {
+                    setTimeout(updateButtonText, 1500);
+                  }
+                  
+                  // Ejecutar cuando cambia el tamaño de la ventana
+                  window.addEventListener('resize', function() {
+                    setTimeout(updateButtonText, 100);
+                  });
+                }
+              })();
+            `
+          }}
+        />
+
         {/* Google Analytics - Descomenta cuando tengas tu ID real */}
         {/* 
         <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>

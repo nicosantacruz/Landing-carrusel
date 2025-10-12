@@ -10,8 +10,10 @@ export const WhatsAppFloatingButton = ({
   delay = 1500,
 }: WhatsAppButtonProps) => {
   const [isVisible, setIsVisible] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    setIsMounted(true)
     const timer = setTimeout(() => {
       setIsVisible(true)
     }, delay)
@@ -25,6 +27,11 @@ export const WhatsAppFloatingButton = ({
     const encodedMessage = encodeURIComponent(message)
     return `https://wa.me/${formattedPhone}?text=${encodedMessage}`
   }, [phoneNumber, message])
+
+  // Evitar hidratación mostrando el botón solo después del mount
+  if (!isMounted) {
+    return null
+  }
 
   return (
     <div

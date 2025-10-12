@@ -31,18 +31,27 @@ const QuickContactSection = dynamic(() => import("@/components/sections/QuickCon
 const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => void }) => {
   const [scrolled, setScrolled] = useState<boolean>(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Bloquear scroll del body cuando el menú está abierto
   useEffect(() => {
+    if (!isMounted) return
+    
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
     return () => { document.body.style.overflow = ''; };
-  }, [menuOpen]);
+  }, [menuOpen, isMounted]);
 
   useEffect(() => {
+    if (!isMounted) return
+    
     let ticking = false;
     
     const handleScroll = (): void => {
@@ -58,7 +67,7 @@ const Header = ({ handleNavClick }: { handleNavClick: (e: React.MouseEvent<HTMLA
 
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [isMounted])
 
   // Función para scroll con offset
   const scrollToContactWithOffset = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -307,10 +316,17 @@ export default function Home() {
   const formRef = useRef<HTMLFormElement>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Función para scroll suave con offset para todas las secciones
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
+    if (!isMounted) return
+    
     if (sectionId === "inicio") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -374,7 +390,7 @@ export default function Home() {
         {/* Sección de Productos Destacados */}
         <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white via-slate-50/30 to-white">
           <div className="container relative mb-6 md:mb-10">
-            {/* Título centrado con el mismo estilo de Servicios */}
+            {/* Título siempre centrado */}
             <div className="mx-auto max-w-3xl text-center mb-8 md:mb-12">
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
                 <span className="bg-gradient-to-r from-blue-700 to-blue-900 bg-clip-text text-transparent">
@@ -383,12 +399,12 @@ export default function Home() {
               </h2>
             </div>
 
-            {/* Enlace alineado a la derecha del contenedor */}
+            {/* Enlace alineado al borde derecho en desktop, centrado debajo en mobile/tablet */}
             <a 
               href="https://vetramoncruz.vercel.app/products" 
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute right-0 top-1/2 -translate-y-1/2 transform flex items-center gap-2 text-blue-700 hover:text-blue-900 font-medium group transition-colors duration-200"
+              className="absolute right-0 top-1/2 -translate-y-1/2 lg:flex hidden items-center gap-2 text-blue-700 hover:text-blue-900 font-medium group transition-colors duration-200"
             >
               Ver todos los productos
               <svg 
@@ -400,6 +416,26 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
+
+            {/* Enlace centrado debajo del título en mobile/tablet */}
+            <div className="flex justify-center lg:hidden mb-4">
+              <a 
+                href="https://vetramoncruz.vercel.app/products" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm md:text-base text-blue-700 hover:text-blue-900 font-medium group transition-colors duration-200"
+              >
+                Ver todos los productos
+                <svg 
+                  className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-200" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
           </div>
           {/* Carrusel sin márgenes - usa todo el ancho */}
           <Carousel />

@@ -1,11 +1,20 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Phone } from "lucide-react"
 import Image from "next/image"
 
 export const HeroSection = () => {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const scrollToContact = () => {
+    if (!isMounted) return
+    
     const element = document.getElementById("contact");
     if (element) {
       const yOffset = -120;
@@ -100,7 +109,7 @@ export const HeroSection = () => {
 
           <div className="flex flex-col gap-3 items-center mt-8">
             <Button
-              className="rounded-full px-5 py-2 text-sm font-semibold bg-white hover:bg-white text-blue-900 hover:text-blue-700 border-2 border-blue-200 hover:border-blue-700 w-auto min-w-[140px] h-auto transition-all duration-300 hover:scale-105"
+              className="rounded-full px-5 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white hover:text-white w-auto min-w-[140px] h-auto transition-all duration-300 hover:scale-105"
               style={{ letterSpacing: '0.01em' }}
               onClick={scrollToContact}
             >
