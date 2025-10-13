@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { GridTileImage } from './GridTileImage';
 import { Product } from '@/lib/shopify/types';
@@ -9,6 +9,8 @@ export function Carousel() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -90,8 +92,21 @@ export function Carousel() {
   if (!products?.length) return null;
 
   return (
-    <div className="w-full overflow-x-auto pb-6 pt-1 carousel-scroll">
-      <ul className="flex animate-carousel gap-4">
+    <div
+      ref={containerRef}
+      className="w-full overflow-x-auto pb-6 pt-1 carousel-scroll"
+      onScroll={() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+        if (atEnd) {
+          if (!isPaused) setIsPaused(true); // detener animación al final
+        } else if (isPaused) {
+          setIsPaused(false); // reanudar si se aleja del final
+        }
+      }}
+    >
+      <ul className={`flex gap-4 ${isPaused ? '' : 'animate-carousel'}`}>
         {carouselProducts.map((product, i) => (
           <li
             key={`${product.handle}${i}`}
@@ -105,7 +120,7 @@ export function Carousel() {
                   amount: product.priceRange.maxVariantPrice.amount,
                   currencyCode: product.priceRange.maxVariantPrice.currencyCode
                 }}
-                src={product.featuredImage?.url}
+                src={product.featuredImage?.url || '/placeholder.jpg'}
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                 loading="lazy"
