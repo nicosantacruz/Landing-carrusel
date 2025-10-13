@@ -15,6 +15,18 @@
   animation-play-state: paused;
 }
 
+/* Pausar animación mientras el usuario toca/arrastra (sin JS) */
+.animate-carousel:active {
+  animation-play-state: paused;
+}
+
+/* Contenedor de carrusel con scroll suave en móvil */
+.carousel-scroll {
+  -webkit-overflow-scrolling: touch; /* momentum scroll iOS */
+  overscroll-behavior-x: contain; /* evita saltos del body */
+  touch-action: pan-x; /* habilita gesto horizontal */
+}
+
 /* Soporte para @container queries (importante para los labels) */
 @container (min-width: 275px) {
   .hidden\@\[275px\]\/label\:inline {

@@ -59,7 +59,7 @@ export function Carousel() {
   // Evitar hidratación mostrando el carrusel solo después del mount
   if (!isMounted) {
     return (
-      <div className="w-full overflow-x-auto pb-6 pt-1">
+      <div className="w-full overflow-x-auto pb-6 pt-1 carousel-scroll">
         <div className="flex gap-4">
           {[...Array(5)].map((_, i) => (
             <div 
@@ -74,7 +74,7 @@ export function Carousel() {
 
   if (loading) {
     return (
-      <div className="w-full overflow-x-auto pb-6 pt-1">
+      <div className="w-full overflow-x-auto pb-6 pt-1 carousel-scroll">
         <div className="flex gap-4">
           {[...Array(5)].map((_, i) => (
             <div 
@@ -90,7 +90,7 @@ export function Carousel() {
   if (!products?.length) return null;
 
   return (
-    <div className="w-full overflow-x-auto pb-6 pt-1">
+    <div className="w-full overflow-x-auto pb-6 pt-1 carousel-scroll">
       <ul className="flex animate-carousel gap-4">
         {carouselProducts.map((product, i) => (
           <li
